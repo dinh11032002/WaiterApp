@@ -1,0 +1,7 @@
+package com.truongdinh.waiterapp.domain.model
+
+data class Table(
+    val id: Int,
+    val name: String,
+    val status: TableStatus
+)
