@@ -1,3 +1,5 @@
+WaiterApp
+
 Ứng dụng Android hỗ trợ nhân viên phục vụ quản lý bàn, thực đơn và đơn hàng theo thời gian thực cho quán cà phê / nhà hàng.
 
 Backend: WaiterApp-Backend — Spring Boot + MySQL
