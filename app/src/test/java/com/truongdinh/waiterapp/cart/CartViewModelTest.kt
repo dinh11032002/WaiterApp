@@ -2,7 +2,9 @@ package com.truongdinh.waiterapp.cart
 
 import androidx.lifecycle.SavedStateHandle
 import com.truongdinh.waiterapp.MainDispatcherRule
+import com.truongdinh.waiterapp.data.local.entity.Shift
 import com.truongdinh.waiterapp.data.local.session.SessionManager
+import com.truongdinh.waiterapp.data.local.session.UserSession
 import com.truongdinh.waiterapp.data.repository.CartRepository
 import com.truongdinh.waiterapp.data.repository.MenuItemRepository
 import com.truongdinh.waiterapp.data.repository.OrderItemRepository
@@ -10,6 +12,7 @@ import com.truongdinh.waiterapp.data.repository.OrderRepository
 import com.truongdinh.waiterapp.data.repository.TableRepository
 import com.truongdinh.waiterapp.domain.model.Cart
 import com.truongdinh.waiterapp.domain.model.MenuItem
+import com.truongdinh.waiterapp.domain.model.OrderStatus
 import com.truongdinh.waiterapp.domain.model.Table
 import com.truongdinh.waiterapp.domain.model.TableStatus
 import com.truongdinh.waiterapp.ui.features.cart.CartViewModel
@@ -196,5 +199,80 @@ class CartViewModelTest {
         advanceUntilIdle()
 
         coVerify { cartRepository.clear(1) }
+    }
+
+    @Test
+    fun `placeOrder tao order va orderitem thanh cong`() = runTest {
+        val cartItems = listOf(
+            Cart(
+                tableId = 1,
+                menuItemId = 10,
+                quantity = 2
+            )
+        )
+
+        val menuItems = listOf(
+            MenuItem(
+                id = 10,
+                name = "Cà phê sữa",
+                price = 27000L,
+                image = "",
+                categoryId = 1,
+                isAvailable = true
+            )
+        )
+
+        every { cartRepository.getCarts(1) } returns flowOf(cartItems)
+        every { menuItemRepository.getMenuItems() } returns flowOf(menuItems)
+        coEvery { tableRepository.getTableById(1) } returns null
+
+        every { sessionManager.session } returns flowOf(UserSession(
+            staffId = 100,
+            staffName = "Trương Đình",
+            shift = Shift.MORNING,
+            isLoggedIn = true
+        ))
+
+        coEvery { orderRepository.insertOrder(any()) } returns 123L
+
+        val viewModel = CartViewModel(
+            cartRepository,
+            menuItemRepository,
+            tableRepository,
+            orderRepository,
+            orderItemRepository,
+            sessionManager,
+            savedStateHandle
+        )
+
+        advanceUntilIdle()
+
+        viewModel.placeOrder()
+
+        advanceUntilIdle()
+
+        coVerify(exactly = 1) {
+            orderRepository.insertOrder(
+                match {
+                    it.tableId == 1 && it.staffId == 100 && it.status == OrderStatus.PREPARING
+                }
+            )
+        }
+
+        coVerify(exactly = 1) {
+            orderItemRepository.insertOrderItem(
+                match {
+                    it.orderId == 123 && it.menuItemId == 10 && it.quantity == 2 &&
+                            it.unitPrice == 27000L
+                }
+            )
+        }
+
+        coVerify(exactly = 1) {
+            cartRepository.clearCart()
+        }
+
+        assertEquals(false, viewModel.uiState.value.isLoading)
+        assertEquals(null, viewModel.uiState.value.errorMessage)
     }
 }
