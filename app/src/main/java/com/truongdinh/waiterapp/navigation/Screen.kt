@@ -48,4 +48,9 @@ sealed class Screen(
         icon = Icons.Default.Receipt,
         showBottomBar = true
     )
+
+    data object OrderDetail : Screen(route = "order_detail/{orderId}") {
+        fun createRoute(orderId: Int) =
+            "order_detail/$orderId"
+    }
 }

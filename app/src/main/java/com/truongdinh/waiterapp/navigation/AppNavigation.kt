@@ -23,6 +23,7 @@ import com.truongdinh.waiterapp.ui.features.cart.CartRoute
 import com.truongdinh.waiterapp.ui.features.home.HomeRoute
 import com.truongdinh.waiterapp.ui.features.menu.MenuRoute
 import com.truongdinh.waiterapp.ui.features.order.OrderRoute
+import com.truongdinh.waiterapp.ui.features.order.detail.OrderDetailRoute
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -51,6 +52,7 @@ fun AppNavigation() {
         Screen.SignIn,
         Screen.Menu,
         Screen.Cart,
+        Screen.OrderDetail,
         Screen.Order
     ).find { it.route == currentRoute }
 
@@ -120,6 +122,17 @@ fun AppNavigation() {
                     navController = navController,
                     navBackStackEntry = backStackEntry
                 )
+            }
+
+            composable(
+                Screen.OrderDetail.route,
+                arguments = listOf(
+                    navArgument("orderId") {
+                        type = NavType.LongType
+                    }
+                )
+            ) {
+                OrderDetailRoute()
             }
 
             composable(Screen.Order.route) {

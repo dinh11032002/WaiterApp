@@ -37,4 +37,8 @@ class StaffRepository @Inject constructor(
             else Result.failure(exception = Exception("Không thể kết nối đến máy chủ"))
         }
     }
+
+    suspend fun getStaffById(staffId: Int): StaffEntity? {
+        return staffDao.getStaffById(staffId)
+    }
 }

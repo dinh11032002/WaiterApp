@@ -151,7 +151,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun placeOrder() {
+    fun placeOrder(onOrderPlaced: (Long) -> Unit) {
         viewModelScope.launch {
             val cartItems = _uiState.value.cartItemUiModel
             val currentSession = sessionManager.session.first()
@@ -213,6 +213,8 @@ class CartViewModel @Inject constructor(
                         errorMessage = null
                     )
                 }
+
+                onOrderPlaced(orderId)
             } catch (exception: Exception) {
                 Log.e(TAG, "placeOrder failed", exception)
                 _uiState.update {

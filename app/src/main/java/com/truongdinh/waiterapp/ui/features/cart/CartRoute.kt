@@ -22,7 +22,13 @@ fun CartRoute(
     val uiState by viewModel.uiState.collectAsState()
 
     CartScreen(
-        onOrderClick = viewModel::placeOrder,
+        onOrderClick = {
+            viewModel.placeOrder { orderId ->
+                navController.navigate(
+                    Screen.OrderDetail.createRoute(orderId.toInt())
+                )
+            }
+        },
         onCancelClick = viewModel::onCancelClick,
         onClickBack = {
             navController.popBackStack()

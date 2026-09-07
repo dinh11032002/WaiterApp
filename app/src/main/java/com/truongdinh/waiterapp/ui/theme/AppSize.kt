@@ -5,6 +5,8 @@ import androidx.compose.ui.unit.dp
 object AppSize {
     val buttonHeight = 52.dp
 
+    val topBarHeight = 56.dp
+
     val iconSmall = 18.dp
     val iconMedium = 24.dp
     val iconLarge = 32.dp

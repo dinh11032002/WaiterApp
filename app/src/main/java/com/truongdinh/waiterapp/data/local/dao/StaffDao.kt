@@ -21,4 +21,7 @@ interface StaffDao {
 
     @Query("SELECT COUNT(*) FROM staffs")
     suspend fun getStaffCount(): Int
+
+    @Query("SELECT * FROM staffs WHERE id = :staffId LIMIT 1")
+    suspend fun getStaffById(staffId: Int): StaffEntity?
 }

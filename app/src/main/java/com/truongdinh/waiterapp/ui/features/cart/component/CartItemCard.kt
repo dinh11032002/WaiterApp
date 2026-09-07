@@ -56,7 +56,7 @@ fun CartItemCard(
         ) {
             AsyncImage(
                 model = cartItem.image,
-                contentDescription = "image_order_item",
+                contentDescription = "image_cart_item",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(AppSize.drinkImageMedium)
