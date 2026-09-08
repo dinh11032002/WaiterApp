@@ -1,8 +1,5 @@
 package com.truongdinh.waiterapp.ui.features.order.detail.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,14 +14,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
-import coil.request.CachePolicy
-import coil.request.ImageRequest
 import com.truongdinh.waiterapp.ui.features.order.detail.OrderItemUiModel
 import com.truongdinh.waiterapp.ui.theme.AppSize
 import com.truongdinh.waiterapp.ui.theme.AppSpacing
@@ -80,7 +73,7 @@ fun OrderDetailCard(
                     Spacer(modifier = Modifier.height(AppSpacing.sm))
 
                     Text(
-                        text = "Giá: ${orderItemUiModel.unitPrice}",
+                        text = "Giá: ${orderItemUiModel.unitPrice * orderItemUiModel.quantity}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )
