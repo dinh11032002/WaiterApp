@@ -21,6 +21,7 @@ import coil.compose.AsyncImage
 import com.truongdinh.waiterapp.ui.features.order.detail.OrderItemUiModel
 import com.truongdinh.waiterapp.ui.theme.AppSize
 import com.truongdinh.waiterapp.ui.theme.AppSpacing
+import com.truongdinh.waiterapp.util.toCurrencyFormat
 
 @Composable
 fun OrderDetailCard(
@@ -73,7 +74,7 @@ fun OrderDetailCard(
                     Spacer(modifier = Modifier.height(AppSpacing.sm))
 
                     Text(
-                        text = "Giá: ${orderItemUiModel.unitPrice * orderItemUiModel.quantity}",
+                        text = "Giá: ${orderItemUiModel.unitPrice.toCurrencyFormat()}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )

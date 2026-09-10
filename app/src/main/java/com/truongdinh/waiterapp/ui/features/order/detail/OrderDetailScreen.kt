@@ -56,9 +56,11 @@ fun OrderDetailScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            OrderTotal(
-                totalAmount = uiState?.totalAmount ?: 0L
-            )
+            uiState?.orderDetailUiModel?.orderItemUiModel?.let {
+                OrderTotal(
+                    orderItems = it
+                )
+            }
         }
     }
 }
