@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.truongdinh.waiterapp.navigation.Screen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -18,6 +19,10 @@ fun OrderRoute(
 
     OrderScreen(
         uiState = uiState,
-        onOrderClick = {}
+        onOrderClick = { order ->
+            navController.navigate(
+                Screen.OrderDetail.createRoute(order.id, showBottomBar = true)
+            )
+        }
     )
 }
