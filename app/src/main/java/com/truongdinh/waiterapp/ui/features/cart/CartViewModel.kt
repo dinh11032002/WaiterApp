@@ -18,6 +18,7 @@ import com.truongdinh.waiterapp.domain.model.Order
 import com.truongdinh.waiterapp.domain.model.OrderItem
 import com.truongdinh.waiterapp.domain.model.OrderStatus
 import com.truongdinh.waiterapp.domain.model.TableStatus
+
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,7 +37,7 @@ class CartViewModel @Inject constructor(
     private val orderRepository: OrderRepository,
     private val orderItemRepository: OrderItemRepository,
     private val sessionManager: SessionManager,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(CartUiState())
     val uiState = _uiState.asStateFlow()

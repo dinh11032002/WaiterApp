@@ -31,6 +31,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
 
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+    val previousRoute = navController.previousBackStackEntry?.destination?.route
 
     val context = LocalContext.current
     val sessionManager = remember {
@@ -46,25 +47,31 @@ fun AppNavigation() {
     else
         Screen.SignIn.route
 
-    val currentScreen = listOf(
-        Screen.Home,
-        Screen.Profile,
-        Screen.SignIn,
-        Screen.Menu,
-        Screen.Cart,
-        Screen.OrderDetail,
-        Screen.Order
-    ).find { it.route == currentRoute }
+    val shouldShowBottomBar = when {
+        currentRoute in listOf(
+            Screen.Home.route,
+            Screen.Order.route,
+            Screen.Profile.route
+        ) -> true
+
+        currentRoute?.startsWith(Screen.OrderDetail.route.substringBefore("/")) == true &&
+                previousRoute == Screen.Order.route -> true
+
+        else -> false
+    }
 
     Scaffold(
         bottomBar = {
-            if (currentScreen?.showBottomBar == true) {
+            if (shouldShowBottomBar) {
                 BottomBar(
                     currentRoute = currentRoute,
                     onNavigate = { route ->
                         navController.navigate(route) {
-                            popUpTo(navController.graph.startDestinationId)
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
                             launchSingleTop = true
+                            restoreState = true
                         }
                     }
                 )
@@ -132,7 +139,9 @@ fun AppNavigation() {
                     }
                 )
             ) {
-                OrderDetailRoute()
+                OrderDetailRoute(
+                    navController = navController
+                )
             }
 
             composable(Screen.Order.route) {

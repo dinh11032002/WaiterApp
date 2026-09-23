@@ -49,8 +49,8 @@ sealed class Screen(
         showBottomBar = true
     )
 
-    data object OrderDetail : Screen(route = "order_detail/{orderId}?showBottomBar={showBottomBar}") {
-        fun createRoute(orderId: Int, showBottomBar: Boolean) =
-            "order_detail/$orderId?showBottomBar=$showBottomBar"
+    data object OrderDetail : Screen(route = "order_detail/{orderId}") {
+        fun createRoute(orderId: Int) =
+            "order_detail/$orderId?"
     }
 }

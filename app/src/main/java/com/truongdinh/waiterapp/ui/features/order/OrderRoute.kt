@@ -21,7 +21,7 @@ fun OrderRoute(
         uiState = uiState,
         onOrderClick = { order ->
             navController.navigate(
-                Screen.OrderDetail.createRoute(order.id, showBottomBar = true)
+                Screen.OrderDetail.createRoute(order.id)
             )
         }
     )

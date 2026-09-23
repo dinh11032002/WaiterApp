@@ -25,6 +25,7 @@ import java.time.LocalDateTime
 @Composable
 fun OrderDetailScreen(
     uiState: OrderDetailUiState?,
+    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -32,7 +33,7 @@ fun OrderDetailScreen(
             CommonHeader(
                 title = "Đơn hàng#${uiState?.orderDetailUiModel?.orderId}",
                 titleAlignment = HeaderTitleAlignment.Start,
-                onBackClick = {}
+                onBackClick = onBackClick
             )
         }
     ) { innerPadding ->
@@ -96,7 +97,8 @@ fun OrderDetailPreview() {
                     createdAt = LocalDateTime.of(2026, 8, 20, 11, 3)
                 ),
                 totalAmount = 100000L
-            )
+            ),
+            onBackClick = {}
         )
     }
 }

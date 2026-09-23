@@ -25,7 +25,7 @@ fun CartRoute(
         onOrderClick = {
             viewModel.placeOrder { orderId ->
                 navController.navigate(
-                    Screen.OrderDetail.createRoute(orderId.toInt(), showBottomBar = false)
+                    Screen.OrderDetail.createRoute(orderId.toInt())
                 )
             }
         },
