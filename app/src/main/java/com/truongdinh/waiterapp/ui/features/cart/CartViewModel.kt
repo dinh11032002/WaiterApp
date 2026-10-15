@@ -7,6 +7,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.truongdinh.waiterapp.data.local.session.SessionManager
+import com.truongdinh.waiterapp.data.remote.dto.OrderItemRequest
 import com.truongdinh.waiterapp.data.repository.CartRepository
 import com.truongdinh.waiterapp.data.repository.MenuItemRepository
 import com.truongdinh.waiterapp.data.repository.OrderItemRepository
@@ -193,18 +194,17 @@ class CartViewModel @Inject constructor(
                     createdAt = LocalDateTime.now()
                 )
 
-                val orderId = orderRepository.insertOrder(order)
-
-                cartItems.forEach { cartItem ->
-                    val orderItem = OrderItem(
+                val orderItems = cartItems.map { cartItem ->
+                    OrderItem(
                         id = 0,
-                        orderId = orderId.toInt(),
+                        orderId = 0,
                         menuItemId = cartItem.menuItemId,
                         quantity = cartItem.quantity,
                         unitPrice = cartItem.price
                     )
-                    orderItemRepository.insertOrderItem(orderItem)
                 }
+
+                val orderId = orderRepository.placeOrder(order, orderItems)
 
                 cartRepository.clearCart()
 

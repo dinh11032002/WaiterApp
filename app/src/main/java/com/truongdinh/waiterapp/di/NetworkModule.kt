@@ -4,6 +4,7 @@ import com.truongdinh.waiterapp.data.remote.api.AuthApi
 import com.truongdinh.waiterapp.data.remote.api.CartApi
 import com.truongdinh.waiterapp.data.remote.api.CategoryApi
 import com.truongdinh.waiterapp.data.remote.api.MenuItemApi
+import com.truongdinh.waiterapp.data.remote.api.OrderApi
 import com.truongdinh.waiterapp.data.remote.api.TableApi
 import dagger.Module
 import dagger.Provides
@@ -47,4 +48,9 @@ object NetworkModule {
     @Singleton
     fun provideCartApi(retrofit: Retrofit): CartApi =
         retrofit.create(CartApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideOrderApi(retrofit: Retrofit): OrderApi =
+        retrofit.create(OrderApi::class.java)
 }

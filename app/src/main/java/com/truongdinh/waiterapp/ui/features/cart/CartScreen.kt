@@ -58,10 +58,9 @@ fun CartScreen(
                 onIncreaseClick = onIncreaseClick,
                 onDecreaseClick = onDecreaseClick,
                 onDeleteClick = onDeleteClick,
-                onItemClick = onItemClick
+                onItemClick = onItemClick,
+                modifier = Modifier.weight(1f)
             )
-
-            Spacer(modifier = Modifier.weight(1f))
 
             CartTotalRow(
                 totalAmount = uiState.totalAmount,

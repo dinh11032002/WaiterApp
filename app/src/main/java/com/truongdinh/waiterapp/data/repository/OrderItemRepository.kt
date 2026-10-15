@@ -15,18 +15,6 @@ class OrderItemRepository @Inject constructor(
         return orderItemDao.insertOrderItem(orderItem.toEntity())
     }
 
-    suspend fun insertOrderItems(orderItems: List<OrderItem>): List<Long> {
-        return orderItemDao.insertOrderItems(orderItems.map { it.toEntity() })
-    }
-
-    fun getOrderItemById(orderItemId: Int): Flow<OrderItem?> {
-        return orderItemDao
-            .getOrderItemsById(orderItemId)
-            .map { entity ->
-                entity?.toDomain()
-            }
-    }
-
     fun getOrderItemsByOrderId(orderId: Int): Flow<List<OrderItem>> {
         return orderItemDao
             .getOrderItemsByOrderId(orderId)
@@ -35,9 +23,5 @@ class OrderItemRepository @Inject constructor(
                     it.toDomain()
                 }
             }
-    }
-
-    suspend fun deleteOrderItemsByOrderId(orderId: Int) {
-        orderItemDao.deleteOrderItemsByOrderId(orderId)
     }
 }

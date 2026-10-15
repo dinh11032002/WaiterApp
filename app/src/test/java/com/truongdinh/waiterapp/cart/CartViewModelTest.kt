@@ -222,6 +222,8 @@ class CartViewModelTest {
             )
         )
 
+        val onOrderPlaced = mockk<(Long) -> Unit>(relaxed = true)
+
         every { cartRepository.getCarts(1) } returns flowOf(cartItems)
         every { menuItemRepository.getMenuItems() } returns flowOf(menuItems)
         coEvery { tableRepository.getTableById(1) } returns null
@@ -247,7 +249,7 @@ class CartViewModelTest {
 
         advanceUntilIdle()
 
-        viewModel.placeOrder()
+        viewModel.placeOrder(onOrderPlaced = onOrderPlaced)
 
         advanceUntilIdle()
 
@@ -270,6 +272,10 @@ class CartViewModelTest {
 
         coVerify(exactly = 1) {
             cartRepository.clearCart()
+        }
+
+        coVerify(exactly = 1) {
+            onOrderPlaced.invoke(123L)
         }
 
         assertEquals(false, viewModel.uiState.value.isLoading)

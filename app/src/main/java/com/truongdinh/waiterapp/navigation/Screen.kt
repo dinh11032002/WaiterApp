@@ -51,6 +51,6 @@ sealed class Screen(
 
     data object OrderDetail : Screen(route = "order_detail/{orderId}") {
         fun createRoute(orderId: Int) =
-            "order_detail/$orderId?"
+            "order_detail/$orderId"
     }
 }

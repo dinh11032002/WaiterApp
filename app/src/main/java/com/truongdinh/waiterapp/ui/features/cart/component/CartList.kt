@@ -21,6 +21,7 @@ fun CartList(
     onIncreaseClick: (Int) -> Unit,
     onDecreaseClick: (Int) -> Unit,
     onDeleteClick: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     if (cartItems.isEmpty()) {
         Box(
@@ -36,6 +37,7 @@ fun CartList(
         }
     } else {
     LazyColumn(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(AppSpacing.md)
     ) {
         items(cartItems, key = { it.menuItemId }) { items ->
