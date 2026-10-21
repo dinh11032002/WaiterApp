@@ -5,6 +5,7 @@ import com.truongdinh.waiterapp.data.remote.api.TableApi
 import com.truongdinh.waiterapp.data.local.dao.TableDao
 import com.truongdinh.waiterapp.data.local.entity.TableEntity
 import com.truongdinh.waiterapp.data.mapper.toDomain
+import com.truongdinh.waiterapp.data.remote.dto.UpdateTableStatusRequest
 import com.truongdinh.waiterapp.domain.model.Table
 import com.truongdinh.waiterapp.domain.model.TableStatus
 import kotlinx.coroutines.flow.Flow
@@ -55,5 +56,12 @@ class TableRepository @Inject constructor(
 
     suspend fun updateTableStatus(tableId: Int, status: TableStatus) {
         tableDao.updateStatus(tableId, status.name)
+        try {
+            tableApi.updateTableStatus(tableId, UpdateTableStatusRequest(status.name))
+        } catch (e: Exception) {
+            Log.e("TableRepository", "update status offline: ${e.message}")
+        } catch (e: Exception) {
+            Log.e("TableRepository", "update status rejected: ${e.hashCode()}")
+        }
     }
 }
