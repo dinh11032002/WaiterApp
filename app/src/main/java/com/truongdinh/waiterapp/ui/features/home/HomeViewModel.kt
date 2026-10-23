@@ -39,17 +39,7 @@ class HomeViewModel @Inject constructor(
 
         syncTables()
         observeTables()
-
-        viewModelScope.launch {
-            sessionManager.session.collect { session ->
-                _uiState.update {
-                    it.copy(
-                        username = session.staffName,
-                        shift = session.shift
-                    )
-                }
-            }
-        }
+        observeSession()
     }
 
     private fun observeTables() {
@@ -69,6 +59,19 @@ class HomeViewModel @Inject constructor(
                 }
             }
             .launchIn(viewModelScope)
+    }
+
+    private fun observeSession() {
+        viewModelScope.launch {
+            sessionManager.session.collect { session ->
+                _uiState.update {
+                    it.copy(
+                        username = session.staffName,
+                        shift = session.shift
+                    )
+                }
+            }
+        }
     }
 
     private fun filterTablesByStatus(tables: List<Table>, filter: TableFilter?): List<Table> {
