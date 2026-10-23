@@ -1,8 +1,10 @@
 package com.truongdinh.waiterapp.ui.features.order.detail.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,9 +16,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.AsyncImage
 import com.truongdinh.waiterapp.ui.features.order.detail.OrderItemUiModel
 import com.truongdinh.waiterapp.ui.theme.AppSize
@@ -35,46 +39,69 @@ fun OrderDetailCard(
             containerColor = MaterialTheme.colorScheme.primary
         )
     ) {
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(AppSpacing.lg)
+                .padding(AppSpacing.md),
+            verticalAlignment = Alignment.Top
         ) {
-            Row(
+            AsyncImage(
+                model = orderItemUiModel.image,
+                contentDescription = "image_order_item",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(AppSpacing.md)
+                    .size(AppSize.drinkImageMedium)
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(AppSpacing.md))
+            )
+
+            Spacer(modifier = Modifier.width(AppSpacing.md))
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(AppSpacing.xs)
             ) {
-                AsyncImage(
-                    model = orderItemUiModel.image,
-                    contentDescription = "image_order_item",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(AppSize.drinkImageMedium)
-                        .clip(RoundedCornerShape(AppSpacing.md))
+                Text(
+                    text = orderItemUiModel.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.width(AppSpacing.sm))
+                Spacer(modifier = Modifier.height(AppSpacing.xs))
 
-                Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
-                        text = "Tên đồ uống: ${orderItemUiModel.name}",
+                        text = "Số lượng:",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )
 
-                    Spacer(modifier = Modifier.height(AppSpacing.sm))
-
                     Text(
-                        text = "Số lượng: ${orderItemUiModel.quantity}",
+                        text = "x${orderItemUiModel.quantity}",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Giá:",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )
 
-                    Spacer(modifier = Modifier.height(AppSpacing.sm))
-
                     Text(
-                        text = "Giá: ${orderItemUiModel.unitPrice.toCurrencyFormat()}",
+                        text = orderItemUiModel.unitPrice.toCurrencyFormat(),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )

@@ -20,15 +20,15 @@ fun CartTotalRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Tổng cộng: ",
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            text = "Tổng cộng:",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
         )
 
         Text(
             text = totalAmount.toCurrencyFormat(),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }

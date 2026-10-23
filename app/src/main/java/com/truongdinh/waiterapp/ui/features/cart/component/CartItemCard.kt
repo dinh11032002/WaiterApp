@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import coil.compose.AsyncImage
 import com.truongdinh.waiterapp.ui.features.cart.CartItemUiModel
 import com.truongdinh.waiterapp.ui.theme.AppSize
@@ -52,7 +53,8 @@ fun CartItemCard(
         Row(
             modifier = Modifier
                 .padding(AppSpacing.md)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.Top
         ) {
             AsyncImage(
                 model = cartItem.image,
@@ -66,28 +68,33 @@ fun CartItemCard(
             Spacer(modifier = Modifier.width(AppSpacing.md))
 
             Column(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(AppSpacing.sm)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Top
                 ) {
                     Text(
                         text = cartItem.name,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onPrimary
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier.weight(1f),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     IconButton(
                         onClick = {
                             onDeleteClick(cartItem.menuItemId)
-                        }
+                        },
+                        modifier = Modifier.size(AppSize.iconMedium)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "icon_delete",
-                            tint = MaterialTheme.colorScheme.onPrimary
+                            tint = MaterialTheme.colorScheme.error
                         )
                     }
                 }
@@ -95,20 +102,25 @@ fun CartItemCard(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Số lượng: ",
+                        text = "Số lượng:",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimary
                     )
 
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(AppSpacing.xs)
                     ) {
-                        IconButton(onClick = {
-                            onDecreaseClick(cartItem.menuItemId)
-                        }) {
+                        IconButton(
+                            onClick = {
+                                onDecreaseClick(cartItem.menuItemId)
+                            },
+                            modifier = Modifier.size(AppSize.iconMedium)
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Remove,
                                 contentDescription = "decrease_icon",
@@ -122,9 +134,12 @@ fun CartItemCard(
                             color = MaterialTheme.colorScheme.onPrimary
                         )
 
-                        IconButton(onClick = {
-                            onIncreaseClick(cartItem.menuItemId)
-                        }) {
+                        IconButton(
+                            onClick = {
+                                onIncreaseClick(cartItem.menuItemId)
+                            },
+                            modifier = Modifier.size(AppSize.iconMedium)
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Add,
                                 contentDescription = "increase_icon",
@@ -134,11 +149,24 @@ fun CartItemCard(
                     }
                 }
 
-                Text(
-                    text = "Giá: ${cartItem.price.toCurrencyFormat()}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Giá:",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+
+                    Text(
+                        text = cartItem.price.toCurrencyFormat(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         }
     }

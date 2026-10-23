@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -20,8 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.truongdinh.waiterapp.ui.theme.AppRadius
 import com.truongdinh.waiterapp.ui.theme.AppSpacing
-import java.text.NumberFormat
-import java.util.Locale
+import com.truongdinh.waiterapp.util.toCurrencyFormat
 
 @Composable
 fun BottomCartBar(
@@ -56,7 +53,7 @@ fun BottomCartBar(
             Spacer(modifier = Modifier.width(AppSpacing.sm))
 
             Text(
-                text = "${NumberFormat.getNumberInstance(Locale("vi", "VN")).format(totalPrices)} VNĐ",
+                text = "${totalPrices.toCurrencyFormat()} VNĐ",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
             )
