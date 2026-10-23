@@ -17,5 +17,5 @@ object AppSize {
 
     val drinkImageSmall = 64.dp
     val drinkImageMedium = 96.dp
-    val drinkImageLarge = 128.dp
+    val drinkImageLarge = 200.dp
 }

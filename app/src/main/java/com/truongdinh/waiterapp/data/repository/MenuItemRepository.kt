@@ -4,7 +4,6 @@ import android.util.Log
 import com.truongdinh.waiterapp.data.local.dao.MenuItemDao
 import com.truongdinh.waiterapp.data.local.entity.MenuItemEntity
 import com.truongdinh.waiterapp.data.mapper.toDomain
-import com.truongdinh.waiterapp.data.mapper.toEntity
 import com.truongdinh.waiterapp.data.remote.api.MenuItemApi
 import com.truongdinh.waiterapp.domain.model.MenuItem
 import kotlinx.coroutines.flow.Flow

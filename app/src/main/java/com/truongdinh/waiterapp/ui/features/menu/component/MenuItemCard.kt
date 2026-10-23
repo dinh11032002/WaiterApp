@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
@@ -32,8 +34,6 @@ import com.truongdinh.waiterapp.ui.theme.AppRadius
 import com.truongdinh.waiterapp.ui.theme.AppSize
 import com.truongdinh.waiterapp.ui.theme.AppSpacing
 import com.truongdinh.waiterapp.util.toCurrencyFormat
-import java.text.NumberFormat
-import java.util.Locale
 
 @Composable
 fun MenuItemCard(
@@ -62,14 +62,14 @@ fun MenuItemCard(
                     contentDescription = menuItem.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .height(AppSize.drinkImageLarge)
                         .clip(RoundedCornerShape(AppSpacing.lg))
                 )
             } else {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .height(AppSize.drinkImageLarge)
                         .clip(RoundedCornerShape(AppSpacing.lg))
                         .background(MaterialTheme.colorScheme.primary),
@@ -85,19 +85,25 @@ fun MenuItemCard(
 
             Spacer(modifier = Modifier.height(AppSpacing.md))
 
-            Text(
-                text = menuItem.name,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = menuItem.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
 
-            Spacer(modifier = Modifier.height(AppSpacing.xs))
+                Spacer(modifier = Modifier.height(AppSpacing.xs))
 
-            Text(
-                text = "${menuItem.price.toCurrencyFormat()} VNĐ",
-                style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
+                Text(
+                    text = "${menuItem.price.toCurrencyFormat()} VNĐ",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
 
             Spacer(modifier = Modifier.height(AppSpacing.md))
 
